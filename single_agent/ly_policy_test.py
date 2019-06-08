@@ -3,7 +3,7 @@ import time
 import numpy as np
 import gym
 from gym.envs.registration import register
-
+import itertools
 
 def register_multibs_env():
 
@@ -61,6 +61,7 @@ def register_multibs_env():
                 'full_duplex': True,
                 })
 
+
 def Ly_policy(policy_set, env):
     state = env.s
     max_value = -np.inf
@@ -104,44 +105,53 @@ def Ly_policy(policy_set, env):
     return policy_set[max_index], v_u, v_d
 
 
-register_multibs_env()
-ENV_NAME = 'multi-bs-fd-v0'
-env = gym.make(ENV_NAME)
-env.reset()
-duration = 5000
-ly_results = []
-static_ly_results = []
-'''
-policy_set = []
-for i in itertools.product(env.action_space, repeat=env.bs_num):
-    policy_set.append(i)
-'''
-static_policy_set = []
-for i in env.action_space:
-    static_policy_set.append([i]*env.bs_num)
-'''
-episode_time = time.time()
-for i in range(duration):
-    policy, _, _ = Ly_policy(policy_set, env)
-    _, reward, _, _ = env.step(policy)
-    ly_results.append(-reward)
-    if i % 100 == 0:
-        print(i)
-print('Ly took %.5f' % (time.time() - episode_time))
-'''
-for i in range(50):
+if __name__ == '__main__':
+    register_multibs_env()
+    ENV_NAME = 'multi-bs-fd-v0'
+    env = gym.make(ENV_NAME)
     env.reset()
-    ans = []
-    episode_time = time.time()
-    for i in range(duration):
-        policy, _, _ = Ly_policy(static_policy_set, env)
-        _, reward, _, _ = env.step(policy)
-        ans.append(-reward)
-        if i % 1000 == 0:
-            print(i)
-    print('static Ly took %.5f' % (time.time() - episode_time))
-    print('static Ly reward %.5f' % np.mean(ans))
-    static_ly_results.append(np.mean(ans))
-print('static Ly average reward %.5f' % np.mean(static_ly_results))
+    duration = 5000
+    dynamic_ly_results = []
+    static_ly_results = []
 
-## CEM? may be works well?
+    # creat dynamic and static candidate policy set
+    dynamic_policy_set = []
+    for i in itertools.product(env.action_space, repeat=env.bs_num):
+        dynamic_policy_set.append(i)
+
+    static_policy_set = []
+    for i in env.action_space:
+        static_policy_set.append([i]*env.bs_num)
+
+
+    # run static policy
+    for i in range(50):
+        env.reset()
+        ans = []
+        episode_time = time.time()
+        for i in range(duration):
+            policy, _, _ = Ly_policy(static_policy_set, env)
+            _, reward, _, _ = env.step(policy)
+            ans.append(-reward)
+            if i % 1000 == 0:
+                print(i)
+        print('static Ly took %.5f' % (time.time() - episode_time))
+        print('static Ly reward %.5f' % np.mean(ans))
+        static_ly_results.append(np.mean(ans))
+    print('static Ly average reward %.5f' % np.mean(static_ly_results))
+
+    # run dynamic policy
+    for i in range(10):
+        env.reset()
+        ans = []
+        episode_time = time.time()
+        for i in range(duration):
+            policy, _, _ = Ly_policy(dynamic_policy_set, env)
+            _, reward, _, _ = env.step(policy)
+            ans.append(-reward)
+            if i % 100 == 0:
+                print(i)
+        print('dynamic Ly took %.5f' % (time.time() - episode_time))
+        print('dynamic Ly reward %.5f' % np.mean(ans))
+        dynamic_ly_results.append(np.mean(ans))
+    print('dynamic Ly average reward %.5f' % np.mean(dynamic_ly_results))
