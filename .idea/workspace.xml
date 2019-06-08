@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a6cfe9ad-d19e-4444-8463-0a2919af3548" name="Default" comment="" />
+    <list default="true" id="a6cfe9ad-d19e-4444-8463-0a2919af3548" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,6 +13,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
@@ -25,7 +34,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="286" />
     <option name="y" value="78" />
     <option name="width" value="1292" />
@@ -42,6 +51,11 @@
             <path>
               <item name="rl-based-full-duplex-schedule" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl-based-full-duplex-schedule" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rl-based-full-duplex-schedule" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl-based-full-duplex-schedule" type="462c0819:PsiDirectoryNode" />
+              <item name="multi_agent" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
